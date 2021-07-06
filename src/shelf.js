@@ -27,7 +27,7 @@ class Shelf extends React.Component{
                                 <ol className="books-grid">
                                     
           							{this.props.shelf.reading.map(book=>(
-        								<li key={book.id} >
+        								<li key={book.title} >
                                             <div className="book">
                                                 <div className="book-top">
                                                     <div className="book-cover" 
@@ -44,7 +44,7 @@ class Shelf extends React.Component{
                                                     </div>
                                                     </div>
                                                 <div className="book-title">{book.title}</div>
-												{book.authors.map(author=><div className="book-authors" key={book.author} >{author}</div>)}
+												{book.authors.map((author, index)=><div className="book-authors" key={`${book.author} + ${index}`} >{author}</div>)}
                                             </div>
                                         </li>
         							))}
@@ -58,7 +58,7 @@ class Shelf extends React.Component{
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {this.props.shelf.wantToRead.map(book=>(
-        								<li key={book.id} >
+        								<li key={book.title} >
                                             <div className="book">
                                                 <div className="book-top">
                                                     <div className="book-cover" 
@@ -75,7 +75,7 @@ class Shelf extends React.Component{
                                                     </div>
                                                     </div>
                                                 <div className="book-title">{book.title}</div>
-												{book.authors.map(author=><div className="book-authors" key={book.author} >{author}</div>)}
+												{book.authors.map((author, index)=><div className="book-authors" key={`${book.author} + ${index}`} >{author}</div>)}
                                             </div>
                                         </li>
         							))}
@@ -89,7 +89,7 @@ class Shelf extends React.Component{
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {this.props.shelf.read.map(book=>(
-        								<li key={book.id} >
+        								<li key={book.title} >
                                             <div className="book">
                                                 <div className="book-top">
                                                     <div className="book-cover" 
@@ -106,7 +106,7 @@ class Shelf extends React.Component{
                                                     </div>
                                                     </div>
                                                 <div className="book-title">{book.title}</div>
-												{book.authors.map(author=><div className="book-authors" key={book.author} >{author}</div>)}
+												{book.authors.map((author, index)=><div className="book-authors" key={`${book.author} + ${index}`} >{author}</div>)}
                                             </div>
                                         </li>
         							))}

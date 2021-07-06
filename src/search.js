@@ -13,9 +13,6 @@ class Search extends React.Component {
     };
 
     componentDidMount(){
-        if(this.state.queryString === ""){
-            this.queryBooks("android");
-        }
         this.getBooksInShelfId()
     }
 
@@ -23,7 +20,7 @@ class Search extends React.Component {
         const getCurrentlyReading = this.props.shelf.reading.map(book=>book.id);
         const getRead = this.props.shelf.read.map(book=>book.id);
         const getWantToRead = this.props.shelf.wantToRead.map(book=>book.id);
-        console.log("SETTING BOOKS IN SHELF ID'S")
+        
         this.setState({
             reading: getCurrentlyReading,
             read: getRead,
@@ -36,12 +33,16 @@ class Search extends React.Component {
         if( books !== undefined && !books.error ){
             this.setState({ searchBooksResult: books });
             this.getBooksInShelfId()
+        }else{
+            this.setState({searchBooksResult: []})
         }
     }
 
     async addBookToShelf(book, shelf) {
         BooksAPI.update(book, shelf).then((res) =>{
-            console.log(book.title, "ADDED TO SHELF ---", shelf)
+
+            // refresh all books in shelf
+            this.props.getAllBooksInShelf()
         });
     }
 
@@ -52,6 +53,8 @@ class Search extends React.Component {
             return "read"
         }else if(this.state.wantToRead.includes(bookId)){
             return "wantToRead"
+        }else{
+            return "none"
         }
     }
 
@@ -92,7 +95,7 @@ class Search extends React.Component {
                                                 style={{
                                                     width: 128,
                                                     height: 193,
-                                                    backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                                    backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail: ""})`
                                                 }}
                                             />
                                             <div className="book-shelf-changer">
@@ -127,10 +130,10 @@ class Search extends React.Component {
                                         <div className="book-title">
                                             {book.title}
                                         </div>
-                                        {book.authors && book.authors.map((author) => (
+                                        {book.authors && book.authors.map((author,index) => (
                                             <div
                                                 className="book-authors"
-                                                key={book.author}
+                                                key={`${book.author}${index}`}
                                             >
                                                 {author}
                                             </div>
